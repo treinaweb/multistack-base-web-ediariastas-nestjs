@@ -8,16 +8,32 @@ import * as session from 'express-session';
 import flash = require('connect-flash');
 import { AppModule } from './app.module';
 import * as passport from 'passport';
+import { Helpers } from './commom/utils/helpers';
+import { Request } from 'express';
+import * as express from 'express';
 
 async function bootstrap() {
+  const exp = express();
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const viewPath = join(__dirname, '..', 'views');
   app.useGlobalPipes(new ValidationPipe());
 
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(viewPath);
+
+  app.use((req: Request, res, next) => {
+    exp.locals.expreq = req;
+    next();
+  });
+
   app.setViewEngine('hbs');
-  app.engine('hbs', exphbs.engine({ extname: 'hbs', defaultLayout: 'main' }));
+
+  const handlebars = new Helpers();
+  const helpers = await handlebars.helperHbs(exp);
+  app.engine(
+    'hbs',
+    exphbs.engine({ extname: 'hbs', defaultLayout: 'main', helpers }),
+  );
 
   app.use(methodOverride('_method'));
 
