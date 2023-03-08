@@ -37,6 +37,7 @@ export class ServicosController {
       message: req.flash('message'),
       oldData: req.flash('oldData'),
       alert: req.flash('alert'),
+      csrfToken: req.csrfToken(),
     };
   }
 
@@ -66,6 +67,7 @@ export class ServicosController {
       oldData: req.flash('oldData'),
       alert: req.flash('alert'),
       servico: await this.servicosService.findOne(id),
+      csrfToken: req.csrfToken(),
     };
   }
 

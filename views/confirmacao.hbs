@@ -30,6 +30,7 @@
         </div>
         <div class='card-body login-card-body'>
           <form action='/admin/confirmacao' method='post'>
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
             <input type='hidden' name='token' value='{{tokenPassword}}' />
             <div class='input-group mb-3'>
               <input

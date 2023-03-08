@@ -8,6 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name='csrf-token' content='#' />
   <title>Ediaristas - Admin</title>
 
   <!-- Google Font: Source Sans Pro -->
@@ -19,7 +20,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="/css/adminlte.min.css">
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body class="sidebar-mini">
   <div class="wrapper">
 
     <!-- Navbar -->
@@ -30,13 +31,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
       </ul>
-
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" data-widget="navbar-search" href="#">
-            Olá Admin
+        <li class="nav-item user-menu">
+          <a href="#" class="nav-link">
+            <span>
+              Olá {{userMenu}}
+            </span>
           </a>
+         </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item user-menu">
+          <a class="btn btn-default btn-flat float-right  btn-block nav-link" href="#"
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <span>
+              Sair
+            </span>
+          </a>
+          <form id="logout-form" action="/admin/logout" method="POST" style="display: none;">
+          <input type="hidden" name="_csrf" value="{{token}}" />
+          </form>
         </li>
       </ul>
     </nav>
@@ -58,8 +73,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            <li class="nav-item menu-open">
-              <a href="#" class="nav-link active">
+            <li
+              class="nav-item has-treeview {{#menuSuperior 'menu-is-opening menu-open' '/admin/servicos/create' '/admin/servicos/index'}}{{/menuSuperior}}">
+              <a href="#"
+                class="nav-link {{#menuSuperior 'active' '/admin/servicos/create' '/admin/servicos/index'}}{{/menuSuperior}}">
                 <i class="fas fa-fw fa-broom"></i>
                 <p>
                   Cadastro de Serviços
@@ -68,7 +85,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/admin/servicos/index" class="nav-link">
+                  <a href="/admin/servicos/index"
+                    class="nav-link {{#menuSubItem '/admin/servicos/index'}}{{/menuSubItem}}">
                     <i class="fas fa-fw fa-list"></i>
                     <p>Lista de Serviços</p>
                   </a>
@@ -76,15 +94,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </ul>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/admin/servicos/create" class="nav-link">
+                  <a href="/admin/servicos/create"
+                    class="nav-link {{#menuSubItem '/admin/servicos/create'}}{{/menuSubItem}}">
                     <i class="fas fa-fw fa-file"></i>
                     <p>Novo Serviço</p>
                   </a>
                 </li>
               </ul>
             </li>
-            <li class="nav-item menu-open">
-              <a href="#" class="nav-link active">
+            <li
+              class="nav-item has-treeview {{#menuSuperior 'menu-is-opening menu-open' '/admin/usuarios/create' '/admin/usuarios/index'}}{{/menuSuperior}}">
+              <a href="#"
+                class="nav-link {{#menuSuperior 'active' '/admin/usuarios/create' '/admin/usuarios/index'}}{{/menuSuperior}}">
                 <i class="fas fa-fw fa-user"></i>
                 <p>
                   Cadastro de Usuários
@@ -93,7 +114,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/admin/usuarios/index" class="nav-link">
+                  <a href="/admin/usuarios/index"
+                    class="nav-link {{#menuSubItem '/admin/usuarios/index'}}{{/menuSubItem}}">
                     <i class="fas fa-fw fa-list"></i>
                     <p>Lista de Usuários</p>
                   </a>
@@ -101,7 +123,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </ul>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/admin/usuarios/create" class="nav-link">
+                  <a href="/admin/usuarios/create"
+                    class="nav-link {{#menuSubItem '/admin/usuarios/create'}}{{/menuSubItem}}">
                     <i class="fas fa-fw fa-file"></i>
                     <p>Novo Usuário</p>
                   </a>
@@ -109,11 +132,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/admin/diarias/index">
-              <i class="fa fa-fw fa-clipboard-list"></i>
-              <p>
-                Lista de diárias
-              </p>
+              <a class="nav-link {{#menuSubItem '/admin/diarias/index'}}{{/menuSubItem}}" href="/admin/diarias/index">
+                <i class="fa fa-fw fa-clipboard-list"></i>
+                <p>
+                  Lista de diárias
+                </p>
               </a>
             </li>
           </ul>

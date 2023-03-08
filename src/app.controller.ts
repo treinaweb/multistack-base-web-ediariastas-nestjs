@@ -5,9 +5,11 @@ import {
   Redirect,
   Render,
   Request,
+  Res,
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { AppService } from './app.service';
 import { AuthException } from './commom/filters/auth-exceptions.filters';
 import { LoginGuard } from './commom/guards/login.guard';
@@ -23,6 +25,7 @@ export class AppController {
       layout: false,
       loginError: req.flash('loginError'),
       class: req.flash('class'),
+      csrfToken: req.csrfToken(),
     };
   }
 
@@ -32,5 +35,24 @@ export class AppController {
   @Redirect('/admin/usuarios/index')
   doLogin() {
     //
+  }
+
+  @UseFilters(AuthException)
+  @Post('admin/logout')
+  logout(@Request() req, @Res() res: Response) {
+    req.session.destroy();
+    res.redirect('/admin/login');
+  }
+
+  @Get('admin/404')
+  @Render('404')
+  notFound() {
+    return { layout: false };
+  }
+
+  @Get('admin/500')
+  @Render('500')
+  errorServer() {
+    return { layout: false };
   }
 }

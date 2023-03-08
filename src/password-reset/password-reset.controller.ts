@@ -6,6 +6,7 @@ import {
   Query,
   Redirect,
   Render,
+  Request,
 } from '@nestjs/common';
 import { PasswordResetConfirmacaoDto } from './dto/password-reset-confirmacao.dto';
 import { PasswordResetDto } from './dto/password-reset.dto';
@@ -30,8 +31,8 @@ export class PasswordResetController {
 
   @Get('confirmacao')
   @Render('confirmacao')
-  telaConfirmar(@Query('token') token: string) {
-    return { layout: false, tokenPassword: token };
+  telaConfirmar(@Query('token') token: string, @Request() req) {
+    return { layout: false, tokenPassword: token, csrfToken: req.csrfToken() };
   }
 
   @Post('confirmacao')

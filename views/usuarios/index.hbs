@@ -22,6 +22,7 @@
           <td>{{this.email}}</td>
           <td><a href="/admin/usuarios/{{this.id}}/edit" class="btn btn-primary">Atualizar</a>
           <form action="/admin/usuarios/{{this.id}}?_method=DELETE" method="post" style="display: inline;">
+          <input type="hidden" name="_csrf" value="{{../csrfToken}}">
             <button href="/admin/usuarios/{{thiis.id}}" type="submit" onclick="return confirm('Tem certeza que deseja excluir este usuário?')" class="btn btn-danger">Excluir</button>
           </form></td>
         </tr>
