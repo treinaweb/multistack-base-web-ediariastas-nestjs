@@ -14,7 +14,11 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       password: this.config.get<string>('DATABASE_PASS'),
       host: this.config.get<string>('DATABASE_HOST'),
       port: parseInt(this.config.get('DATABASE_PORT')),
+      url: this.config.get<string>('DATABASE_URL'),
       synchronize: false,
+      ssl: {
+        rejectUnauthorized: false,
+      },
       type: 'postgres',
       entities: [join(__dirname, '..', '**/*entity.{ts,js}')],
       migrations: [

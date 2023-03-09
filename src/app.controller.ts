@@ -18,6 +18,12 @@ import { LoginGuard } from './commom/guards/login.guard';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+  @Get()
+  @Redirect('admin/login')
+  redirect() {
+    //redirect to login
+  }
+
   @Get('admin/login')
   @Render('login')
   getLogin(@Request() req) {

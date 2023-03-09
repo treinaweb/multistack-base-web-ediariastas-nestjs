@@ -13,6 +13,8 @@ import { PasswordResetModule } from './password-reset/password-reset.module';
 import { APP_FILTER } from '@nestjs/core';
 import { AllExceptionFilter } from './commom/filters/all-exceptions.filters';
 import { ConfigModule } from '@nestjs/config';
+import { UserCommand } from './usuario-plataforma/usuario-command';
+import { CommandModule } from 'nestjs-command';
 
 @Module({
   imports: [
@@ -29,9 +31,11 @@ import { ConfigModule } from '@nestjs/config';
     UsuarioApiModule,
     MailModule,
     PasswordResetModule,
+    CommandModule,
   ],
   controllers: [AppController],
   providers: [
+    UserCommand,
     AppService,
     {
       provide: APP_FILTER,
